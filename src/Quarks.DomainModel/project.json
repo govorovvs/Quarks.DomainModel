@@ -1,0 +1,32 @@
+﻿{
+  "title": "Quarks.DomainModel",
+  "description": "Foundations for domain model",
+
+  "packOptions": {
+    "authors": [ "victor.govorov" ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/govorovvs/Quarks.DomainModel.git"
+    },
+    "owners": [ "victor.govorov" ],
+    "projectUrl": "https://github.com/govorovvs/Quarks.DomainModel",
+    "tags": [ "architecture", "domain", "model", "design", "ddd" ]
+  },
+
+  "version": "1.0.0-*",
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    },
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    },
+    "net46": {
+    }
+  }
+}
