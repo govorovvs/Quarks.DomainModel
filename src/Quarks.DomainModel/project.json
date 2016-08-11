@@ -1,17 +1,17 @@
 ﻿{
-  "description": "Foundations for domain model",
+  "description": "Foundations for domain model design",
   "frameworks": {
+    "net46": {
+    },
     "netcoreapp1.0": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0"
+        "System.Runtime.InteropServices": "4.1.0"
       }
     },
     "netstandard1.6": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0"
+        "System.Runtime.InteropServices": "4.1.0"
       }
-    },
-    "net46": {
     }
   },
   "packOptions": {
@@ -26,5 +26,5 @@
     "tags": [ "architecture", "domain", "model", "design", "ddd" ]
   },
   "title": "Quarks.DomainModel",
-  "version": "1.0.0-*"
+  "version": "2.0.0-*"
 }
