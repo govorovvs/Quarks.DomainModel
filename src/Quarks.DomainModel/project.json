@@ -5,11 +5,13 @@
     },
     "netcoreapp1.0": {
       "dependencies": {
+        "System.Linq": "4.1.0",
         "System.Runtime.InteropServices": "4.1.0"
       }
     },
     "netstandard1.6": {
       "dependencies": {
+        "System.Linq": "4.1.0",
         "System.Runtime.InteropServices": "4.1.0"
       }
     }
