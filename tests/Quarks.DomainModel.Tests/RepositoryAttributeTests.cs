@@ -30,7 +30,7 @@ namespace Quarks.DomainModel.Tests
 		[Test]
 		public void Construction_With_Non_Aggregate_Throws_An_Exception()
 		{
-			Assert.That(() => new RepositoryAttribute(typeof(NonEntity)), Throws.ArgumentException);
+			Assert.That(() => new RepositoryAttribute(typeof(NonAggregate)), Throws.ArgumentException);
 		}
 
 		public class EntityMarkerWithInterface : IEntity, IAggregate
