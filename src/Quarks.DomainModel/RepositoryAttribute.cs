@@ -18,7 +18,9 @@ namespace Quarks.DomainModel
 		public RepositoryAttribute(Type entityType)
 		{
 			if (!IsEntityType(entityType))
-				throw new ArgumentException("Entity type ", nameof(entityType));
+				throw new ArgumentException("Only entity type can be used as repository's type", nameof(entityType));
+			if (!IsAggregate(entityType))
+				throw new ArgumentException("Only aggregate type can be used as repository's type", nameof(entityType));
 
 			EntityType = entityType;
 		}
@@ -32,6 +34,12 @@ namespace Quarks.DomainModel
 		{
 			return type.GetTypeInfo().CustomAttributes.Any(t => t.AttributeType == typeof(EntityAttribute)) ||
 			       typeof(IEntity).GetTypeInfo().IsAssignableFrom(type);
+		}
+
+		private bool IsAggregate(Type type)
+		{
+			return type.GetTypeInfo().CustomAttributes.Any(t => t.AttributeType == typeof(AggregateAttribute)) ||
+				   typeof(IAggregate).GetTypeInfo().IsAssignableFrom(type);
 		}
 	}
 }

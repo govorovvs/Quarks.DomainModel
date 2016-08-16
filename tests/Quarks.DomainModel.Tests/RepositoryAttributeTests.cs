@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Quarks.DomainModel.Tests
 {
@@ -25,11 +24,16 @@ namespace Quarks.DomainModel.Tests
 		[Test]
 		public void Construction_With_Non_Entity_Throws_An_Exception()
 		{
-			Assert.Throws<ArgumentException>(
-				() => new RepositoryAttribute(typeof(NonEntity)));
+			Assert.That(() => new RepositoryAttribute(typeof(NonEntity)), Throws.ArgumentException);
 		}
 
-		public class EntityMarkerWithInterface : IEntity
+		[Test]
+		public void Construction_With_Non_Aggregate_Throws_An_Exception()
+		{
+			Assert.That(() => new RepositoryAttribute(typeof(NonEntity)), Throws.ArgumentException);
+		}
+
+		public class EntityMarkerWithInterface : IEntity, IAggregate
 		{
 		}
 
@@ -38,7 +42,11 @@ namespace Quarks.DomainModel.Tests
 		{
 		}
 
-		public class NonEntity
+		public class NonEntity : IAggregate
+		{
+		}
+
+		public class NonAggregate : IEntity
 		{
 		}
 	}
