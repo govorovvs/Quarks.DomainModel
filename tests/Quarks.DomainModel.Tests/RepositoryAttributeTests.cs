@@ -37,7 +37,7 @@ namespace Quarks.DomainModel.Tests
 		{
 		}
 
-		[Entity]
+		[Entity, Aggregate]
 		public class EntityMarkerWithAttribute
 		{
 		}
