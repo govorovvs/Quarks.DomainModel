@@ -1,35 +1,38 @@
 {
-  "description": "Foundations for domain model design",
-  "frameworks": {
-    "net45": {
+    "description": "Foundations for domain model design",
+    "frameworks": {
+        "net45": {
+
+        },
+        "netcoreapp1.0": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1",
+                "System.Linq": "4.1.0",
+                "System.Runtime.InteropServices": "4.1.0"
+            }
+        },
+        "netstandard1.6": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1",
+                "System.Linq": "4.1.0",
+                "System.Runtime.InteropServices": "4.1.0"
+            }
+        }
     },
-    "netcoreapp1.0": {
-      "dependencies": {
-        "System.Linq": "4.1.0",
-        "System.Runtime.InteropServices": "4.1.0"
-      }
+    "packOptions": {
+        "authors": ["victor.govorov"],
+        "iconUrl": "https://github.com/govorovvs/Quarks.DomainModel/blob/master/logo.png?raw=true",
+        "owners": ["victor.govorov"],
+        "projectUrl": "https://github.com/govorovvs/Quarks.DomainModel",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/govorovvs/Quarks.DomainModel.git"
+        },
+        "tags": ["architecture", "domain", "model", "design", "ddd"]
     },
-    "netstandard1.6": {
-      "dependencies": {
-        "System.Linq": "4.1.0",
-        "System.Runtime.InteropServices": "4.1.0"
-      }
+    "title": "Quarks.DomainModel",
+    "version": "2.3.0-*",
+    "buildOptions": {
+        "xmlDoc": true
     }
-  },
-  "packOptions": {
-    "authors": [ "victor.govorov" ],
-    "iconUrl": "https://github.com/govorovvs/Quarks.DomainModel/blob/master/logo.png?raw=true",
-    "owners": [ "victor.govorov" ],
-    "projectUrl": "https://github.com/govorovvs/Quarks.DomainModel",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/govorovvs/Quarks.DomainModel.git"
-    },
-    "tags": [ "architecture", "domain", "model", "design", "ddd" ]
-  },
-  "title": "Quarks.DomainModel",
-  "version": "2.2.0-*",
-  "buildOptions": {
-    "xmlDoc": true
-  }
 }
