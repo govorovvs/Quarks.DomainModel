@@ -31,7 +31,7 @@
         "tags": ["architecture", "domain", "model", "design", "ddd"]
     },
     "title": "Quarks.DomainModel",
-    "version": "2.3.0-*",
+    "version": "3.0.0-*",
     "buildOptions": {
         "xmlDoc": true
     }
