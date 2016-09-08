@@ -267,7 +267,7 @@ public class UserRepository : IRepository<User>
         } 
     }
 
-    public async void ModifyAsync(User user, CancellationToken cancellationToken)
+    public async Task ModifyAsync(User user, CancellationToken cancellationToken)
     {
         IEventSourced sourced = (IEventSourced)user;
         IDomainEvent[] events = sourced.Events;
