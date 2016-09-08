@@ -265,6 +265,8 @@ public class UserRepository : IRepository<User>
         {
             sourced.Consume(event);
         } 
+
+		return user;
     }
 
     public async Task ModifyAsync(User user, CancellationToken cancellationToken)
