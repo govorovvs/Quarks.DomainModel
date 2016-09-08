@@ -23,7 +23,7 @@
       "type": "git",
       "url": "https://github.com/govorovvs/Quarks.DomainModel.git"
     },
-    "tags": [ "architecture", "domain", "model", "design", "ddd" ]
+    "tags": [ "quarks", "architecture", "domain", "model", "design", "ddd", "eventsourcing", "domainevents" ]
   },
   "title": "Quarks.DomainModel",
   "version": "3.1.0-*"
