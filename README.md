@@ -50,6 +50,7 @@ An object fundamentally defined not by its attributes, but by a thread of contin
 ```csharp
 public class Account : IEntity
 {
+    public int Id { get;}
 }
 ```
 or
@@ -134,6 +135,8 @@ public class Money : IValueObject
 {
     public decimal Value { get; }
     public Currency Currency { get; }
+
+    public bool Equals(Money other) => Value == other.Value && Equals(Currency, other.Currency);
 }
 ```
 or
@@ -143,6 +146,8 @@ public class Money : IValueObject
 {
     public decimal Value { get; }
     public Currency Currency { get; }
+
+    public bool Equals(Money other) => Value == other.Value && Equals(Currency, other.Currency);
 }
 ```
 
