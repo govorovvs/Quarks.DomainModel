@@ -1,8 +1,8 @@
 # Quarks.DomainModel
 
-Domain-Driven Design is an approach to software development that suggests that (1) For most software projects, the primary focus should be on the domain and domain logic; and (2) Complex domain designs should be based on a model.
-
 [![Version](https://img.shields.io/nuget/v/Quarks.DomainModel.svg)](https://www.nuget.org/packages/Quarks.DomainModel)
+
+Domain-Driven Design is an approach to software development that suggests that (1) For most software projects, the primary focus should be on the domain and domain logic; and (2) Complex domain designs should be based on a model.
 
 ## Glossary
 
@@ -204,5 +204,65 @@ public void ConfigureDomainEvents
 	}
 
 	DomainEvents.Dispatcher = new DomainEventsDispatcher(handlers);
+}
+```
+
+## Event sourcing
+
+Reliably publish events whenever state changes by using Event Sourcing. Event Sourcing persists each business entity as a sequence of events, which are replayed to reconstruct the current state.
+
+Event sourcing persists the state of a business entity such an *Order* or a *Customer* as a sequence of state-changing events. Whenever the state of a business entity changes, a new event is appended to the list of events. Since saving an event is a single operation, it is inherently atomic. The application reconstructs an entity’s current state by replaying the events.
+
+Applications persist events in an event store, which is a database of events. The store has an API for adding and retrieving an entity’s events. The event store also behaves like a message broker. It provides an API that enables services to subscribe to events. When a service saves an event in the event store, it is delivered to all interested subscribers.
+
+```csharp
+public class RenameEvent(string name) : IEntityEvent
+{
+    public string Name { get; } = name;
+}
+
+public class User : EventSourced, IEntity, IAggregate
+{
+    public string Name { get; }
+
+    public void Rename(string name)
+    {
+        var evnt = new RenameEvent(name);
+        ConsumeWithTracking(evnt);
+    } 
+
+    protected override void ConsumeWithNoTracking(IEntityEvent entityEvent)
+    {
+        DoConsume((dynamic)entityEvent);
+    }
+
+    private void DoConsume(RenameEvent evnt)
+    {
+        Name = evnt.Name;
+    }
+}
+
+public class UserRepository : IRepository<User>
+{
+    private readonly IEventStore _eventStore;
+
+    public async Task<User> FindByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        IDomainEvent[] events = _eventStore.LoadUserEventsAsync(id, cancellationToken);
+        User user = CreateEmptyUser();
+        IEventSourced sourced = (IEventSourced)user;
+        foreach(IDomainEvent event in events)
+        {
+            sourced.Consume(event);
+        } 
+    }
+
+    public async void ModifyAsync(User user, CancellationToken cancellationToken)
+    {
+        IEventSourced sourced = (IEventSourced)user;
+        IDomainEvent[] events = sourced.Events;
+        await _eventStore.PersistUserEvents(events);
+        sourced.ClearEvents();
+    }
 }
 ```
