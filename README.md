@@ -50,7 +50,9 @@ An object fundamentally defined not by its attributes, but by a thread of contin
 ```csharp
 public class Account : IEntity
 {
-    public int Id { get;}
+    public int Id { get; }
+
+    public bool Equals(Account other) => Id == other.Id;
 }
 ```
 or
@@ -58,6 +60,9 @@ or
 [Entity]
 public class Account
 {
+    public int Id { get; }
+
+    public bool Equals(Account other) => Id == other.Id;
 }
 ```
 
