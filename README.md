@@ -84,7 +84,7 @@ public class AccountFactory
 A mechanism for encapsulating storage, retrieval, and search behavior which emulates a collection of objects.
 
 <pre><code>
-public interface IAccountRepository : IRepository<Account>
+public interface IAccountRepository : IRepository\<Account\>
 {
     public Account FindById(int id);
 }
@@ -180,7 +180,7 @@ public class UserManager : IService
 
 Next you will write handler to handle the event. For example, you might have a handler called *SendNewUserWelcomeEmail*. This would be a class that accepts the UserWasRegistered event and uses the *User* object to send the email.
 <pre><code>
-public class SendNewUserWelcomeEmail : IDomainEventHandler<UserWasRegistered>
+public class SendNewUserWelcomeEmail : IDomainEventHandler\<UserWasRegistered\>
 {
 	private IMailService _mailService;
 
