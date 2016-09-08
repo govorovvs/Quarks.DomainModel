@@ -12,97 +12,97 @@ Excerpted from Domain-Driven Design Book by Eric Evans
 
 A cluster of associated objects that are treated as a unit for the purpose of data changes. External references are restricted to one member of the AGGREGATE, designated as the root. A set of consistency rules applies within the AGGREGATE’S boundaries.
 
-<pre><code>
+```csharp
 public class Account : IAggregate
 {
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [Aggregate]
 public class Account
 {
 }
-</code></pre>
+```
 
 ### Bounded Context
 
 The delimited applicability of a particular model. BOUNDING CONTEXTS gives team members a clear and shared understanding of what has to be consistent and what can develop independently.
 
-<pre><code>
+```csharp
 public class AccountManagement : IBoundedContext
 {
     public string Name => "AccountManagement";
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [BoundedContext("AccountManagement")]
 public class AccountManagement
 {
 }
-</code></pre>
+```
 
 ### Entity
 
 An object fundamentally defined not by its attributes, but by a thread of continuity and identity.
 
-<pre><code>
+```csharp
 public class Account : IEntity
 {
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [Entity]
 public class Account
 {
 }
-</code></pre>
+```
 
 ### Factory
 
 A mechanism for encapsulating complex creation logic and abstracting the type of a created object for the sake of a client.
 
-<pre><code>
+```csharp
 public class AccountFactory : IFactory
 {
     public Account CreateAccount(string name) => new Account(name);
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [Factory]
 public class AccountFactory
 {
     public Account CreateAccount(string name) => new Account(name);
 }
-</code></pre>
+```
 
 ### Repository 
 
 A mechanism for encapsulating storage, retrieval, and search behavior which emulates a collection of objects.
 
-<pre><code>
-public interface IAccountRepository : IRepository\<Account\>
+```csharp
+public interface IAccountRepository : IRepository<Account>
 {
     public Account FindById(int id);
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [Repository(typeof(Account))]
 public class IAccountRepository
 {
     public Account FindById(int id);
 }
-</code></pre>
+```
 
 ### Service
 
 An operation offered as an interface that stands alone in the model, with no encapsulated state.
 
-<pre><code>
+```csharp
 public class AccountService : IService
 {
     public void Transfer(Account source, Account dest, Money value)
@@ -111,9 +111,9 @@ public class AccountService : IService
         dest.Enroll(value);
     }
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [Service]
 public class AccountService
 {
@@ -123,35 +123,35 @@ public class AccountService
         dest.Enroll(value);
     }
 }
-</code></pre>
+```
 
 ###Value object
 
 An object that describes some characteristic or attribute but carries no concept of identity.
 
-<pre><code>
+```csharp
 public class Money : IValueObject
 {
     public decimal Value { get; }
     public Currency Currency { get; }
 }
-</code></pre>
+```
 or
-<pre><code>
+```csharp
 [ValueObject]
 public class Money : IValueObject
 {
     public decimal Value { get; }
     public Currency Currency { get; }
 }
-</code></pre>
+```
 
 ## Domain events
 
 Domain Events work in exactly the same way that an event based architecture works in other contexts.
 
 You will typically create a new event such as *UserWasRegistered*. This will be a class that holds the required details of the event that just took place, in this case an instance a *User* object.
-<pre><code>
+```csharp
 public class UserWasRegistered : IDomainEvent
 {
 	public UserWasRegistered(User user) 
@@ -176,11 +176,11 @@ public class UserManager : IService
 		await DomainEvents.RiseAsync(event, cancellationToken);
 	}
 }
-</code></pre>
+```
 
 Next you will write handler to handle the event. For example, you might have a handler called *SendNewUserWelcomeEmail*. This would be a class that accepts the UserWasRegistered event and uses the *User* object to send the email.
-<pre><code>
-public class SendNewUserWelcomeEmail : IDomainEventHandler\<UserWasRegistered\>
+```csharp
+public class SendNewUserWelcomeEmail : IDomainEventHandler<UserWasRegistered>
 {
 	private IMailService _mailService;
 
@@ -190,11 +190,11 @@ public class SendNewUserWelcomeEmail : IDomainEventHandler\<UserWasRegistered\>
 		await _mailService.SendMessageAsync(member, cancellationToken);
 	}
 }
-</code></pre>
+```
 The *SendNewUserWelcomeEmail* is responsible for having the ability to send the email and so the process for registering a new user is completely decoupled from the process of sending the email.
 
 You can also register multiple listeners for events so you can very easily add or remove actions that should be fired whenever an event takes place.
-<pre><code>
+```csharp
 public void ConfigureDomainEvents
 {
 	var handlers = new IDomainEventHandler[]
@@ -205,4 +205,4 @@ public void ConfigureDomainEvents
 
 	DomainEvents.Dispatcher = new DomainEventsDispatcher(handlers);
 }
-</code></pre>
+```
