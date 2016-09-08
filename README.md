@@ -1,6 +1,6 @@
 # Quarks.DomainModel
 
-Domain-Driven Design An approach to software development that suggests that (1) For most software projects, the primary focus should be on the domain and domain logic; and (2) Complex domain designs should be based on a model.
+Domain-Driven Design is an approach to software development that suggests that (1) For most software projects, the primary focus should be on the domain and domain logic; and (2) Complex domain designs should be based on a model.
 
 [![Version](https://img.shields.io/nuget/v/Quarks.DomainModel.svg)](https://www.nuget.org/packages/Quarks.DomainModel)
 
@@ -34,14 +34,14 @@ public class AccountManagement : IBoundedContext
 {
     public string Name => "AccountManagement";
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [BoundedContext("AccountManagement")]
 public class AccountManagement
 {
 }
-</pre></code>
+</code></pre>
 
 ### Entity
 
@@ -51,14 +51,14 @@ An object fundamentally defined not by its attributes, but by a thread of contin
 public class Account : IEntity
 {
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [Entity]
 public class Account
 {
 }
-</pre></code>
+</code></pre>
 
 ### Factory
 
@@ -69,7 +69,7 @@ public class AccountFactory : IFactory
 {
     public Account CreateAccount(string name) => new Account(name);
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [Factory]
@@ -77,7 +77,7 @@ public class AccountFactory
 {
     public Account CreateAccount(string name) => new Account(name);
 }
-</pre></code>
+</code></pre>
 
 ### Repository 
 
@@ -88,7 +88,7 @@ public interface IAccountRepository : IRepository<Account>
 {
     public Account FindById(int id);
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [Repository(typeof(Account))]
@@ -96,7 +96,7 @@ public class IAccountRepository
 {
     public Account FindById(int id);
 }
-</pre></code>
+</code></pre>
 
 ### Service
 
@@ -111,7 +111,7 @@ public class AccountService : IService
         dest.Enroll(value);
     }
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [Service]
@@ -123,7 +123,7 @@ public class AccountService
         dest.Enroll(value);
     }
 }
-</pre></code>
+</code></pre>
 
 ###Value object
 
@@ -135,7 +135,7 @@ public class Money : IValueObject
     public decimal Value { get; }
     public Currency Currency { get; }
 }
-</pre></code>
+</code></pre>
 or
 <pre><code>
 [ValueObject]
@@ -144,4 +144,65 @@ public class Money : IValueObject
     public decimal Value { get; }
     public Currency Currency { get; }
 }
-</pre></code>
+</code></pre>
+
+## Domain events
+
+Domain Events work in exactly the same way that an event based architecture works in other contexts.
+
+You will typically create a new event such as *UserWasRegistered*. This will be a class that holds the required details of the event that just took place, in this case an instance a *User* object.
+<pre><code>
+public class UserWasRegistered : IDomainEvent
+{
+	public UserWasRegistered(User user) 
+	{
+		User = user;
+	}
+
+	public User User { get; }
+}
+
+public class UserManager : IService
+{
+	private readonly IUserRepository _userRepository;
+	private readonly IUserFactory _userFactory;
+
+	public async Task RegisterUserAsync(string name, CancellationToken cancellationToken)
+	{
+		User user _userFactory.CreateUser(name);
+		await _userRepository.AddAsync(user, cancellationToken);
+
+		UserWasRegistered event = new UserWasRegistered(user);
+		await DomainEvents.RiseAsync(event, cancellationToken);
+	}
+}
+</code></pre>
+
+Next you will write handler to handle the event. For example, you might have a handler called *SendNewUserWelcomeEmail*. This would be a class that accepts the UserWasRegistered event and uses the *User* object to send the email.
+<pre><code>
+public class SendNewUserWelcomeEmail : IDomainEventHandler<UserWasRegistered>
+{
+	private IMailService _mailService;
+
+	public async Task HandleAsync(UserWasRegistered event, CancellationToken cancellationToken)
+	{
+		MailMessage message = CreateMail(event.User);
+		await _mailService.SendMessageAsync(member, cancellationToken);
+	}
+}
+</code></pre>
+The *SendNewUserWelcomeEmail* is responsible for having the ability to send the email and so the process for registering a new user is completely decoupled from the process of sending the email.
+
+You can also register multiple listeners for events so you can very easily add or remove actions that should be fired whenever an event takes place.
+<pre><code>
+public void ConfigureDomainEvents
+{
+	var handlers = new IDomainEventHandler[]
+	{
+		new SendNewUserWelcomeEmail(),
+		new CreateUserAccount()
+	}
+
+	DomainEvents.Dispatcher = new DomainEventsDispatcher(handlers);
+}
+</code></pre>
