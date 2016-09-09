@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Quarks.DomainModel.EventSourcing
 {
@@ -20,11 +21,15 @@ namespace Quarks.DomainModel.EventSourcing
             _events.Clear();
         }
 
-        void IEventSourced.Consume(IEntityEvent entityEvent)
+        void IEventSourced.Consume(IEnumerable<IEntityEvent> entityEvents)
         {
-            if (entityEvent == null) throw new ArgumentNullException(nameof(entityEvent));
+            if (entityEvents == null) throw new ArgumentNullException(nameof(entityEvents));
+            if (entityEvents.Any(x => x == null)) throw new ArgumentException("Some of entity event is null", nameof(entityEvents));
 
-            ConsumeWithNoTracking(entityEvent);
+            foreach (IEntityEvent entityEvent in entityEvents)
+            {
+                ConsumeWithNoTracking(entityEvent);
+            }
         }
 
         /// <summary>

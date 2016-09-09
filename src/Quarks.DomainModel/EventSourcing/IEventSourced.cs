@@ -10,10 +10,10 @@ namespace Quarks.DomainModel.EventSourcing
     public interface IEventSourced
     {
         /// <summary>
-        /// Applies the specified event to the entity.
+        /// Applies the specified collection of events to the entity.
         /// </summary>
-        /// <param name="entityEvent">Event should be applied.</param>
-        void Consume(IEntityEvent entityEvent);
+        /// <param name="entityEvents">Collection of events should be applied.</param>
+        void Consume(IEnumerable<IEntityEvent> entityEvents);
 
         /// <summary>
         /// Collection of events in the sequence they were applied for the same lifetime as the entity state itself.

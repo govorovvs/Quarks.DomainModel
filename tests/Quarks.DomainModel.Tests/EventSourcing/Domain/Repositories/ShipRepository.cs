@@ -22,11 +22,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories
         {
             var ship = new Builder<Ship>().Create();
             var events = _eventRepository.Find(time);
-            foreach (IEntityEvent evnt in events)
-            {
-                ((IEventSourced)ship).Consume(evnt);
-            }
-
+            ((IEventSourced)ship).Consume(events);
             return ship;
         }
 

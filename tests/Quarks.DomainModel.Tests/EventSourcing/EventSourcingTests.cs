@@ -45,7 +45,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             var evnt = new RenameEvent(name);
             var ship = new Builder<Ship>().With(x => x.Name, "oldName").Create();
 
-            ((IEventSourced)ship).Consume(evnt);
+            ((IEventSourced)ship).Consume(new[] { evnt});
 
             Assert.That(ship.Name, Is.EqualTo(name));
         }
@@ -70,7 +70,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             var evnt = new ArrivalEvent(port);
             var ship = new Builder<Ship>().With(x => x.Port, null).Create();
 
-            ((IEventSourced)ship).Consume(evnt);
+            ((IEventSourced)ship).Consume(new [] { evnt});
 
             Assert.That(ship.Port, Is.EqualTo(port));
         }

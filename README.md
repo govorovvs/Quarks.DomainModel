@@ -259,13 +259,12 @@ public class UserRepository : IRepository<User>
     public async Task<User> FindByIdAsync(int id, CancellationToken cancellationToken)
     {
         IDomainEvent[] events = _eventStore.LoadUserEventsAsync(id, cancellationToken);
+		if (events.Length == 0)
+			return null;
+
         User user = CreateEmptyUser();
         IEventSourced sourced = (IEventSourced)user;
-        foreach(IDomainEvent event in events)
-        {
-            sourced.Consume(event);
-        } 
-
+		sourced.Consume(events);
 		return user;
     }
 
