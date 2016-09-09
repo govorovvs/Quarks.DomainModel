@@ -147,7 +147,7 @@ public class Money : IValueObject
 or
 ```csharp
 [ValueObject]
-public class Money : IValueObject
+public class Money
 {
     public decimal Value { get; }
     public Currency Currency { get; }
@@ -188,7 +188,7 @@ public class UserManager : IService
 }
 ```
 
-Next you will write handler to handle the event. For example, you might have a handler called *SendNewUserWelcomeEmail*. This would be a class that accepts the UserWasRegistered event and uses the *User* object to send the email.
+Next you will write handler to handle the event. For example, you might have a handler called *SendNewUserWelcomeEmail*. This would be a class that accepts the *UserWasRegistered* event and uses the *User* object to send the email.
 ```csharp
 public class SendNewUserWelcomeEmail : IDomainEventHandler<UserWasRegistered>
 {
