@@ -231,15 +231,28 @@ public class RenameEvent(string name) : IEntityEvent
     public string Name { get; } = name;
 }
 
+public class ChangeNumberEvent(string number) : IEntityEvent
+{
+    public string Number { get; } = number;
+}
+
 public class User : EventSourced, IEntity, IAggregate
 {
-    public string Name { get; }
+    public string Name { get; private set; }
+
+    public string Number { get; private set; }
 
     public void Rename(string name)
     {
         var evnt = new RenameEvent(name);
         ConsumeWithTracking(evnt);
     } 
+
+    public void ChangeNumber(string number)
+    {
+        var evnt = new ChangeNumberEvent(number);
+        ConsumeWithTracking(evnt);
+    }
 
     protected override void ConsumeWithNoTracking(IEntityEvent entityEvent)
     {
@@ -250,6 +263,11 @@ public class User : EventSourced, IEntity, IAggregate
     {
         Name = evnt.Name;
     }
+
+    private void DoConsume(ChangeNumberEvent evnt)
+    {
+        Number = evnt.Number;
+    }
 }
 
 public class UserRepository : IRepository<User>
@@ -258,7 +276,7 @@ public class UserRepository : IRepository<User>
 
     public async Task<User> FindByIdAsync(int id, CancellationToken cancellationToken)
     {
-        IDomainEvent[] events = _eventStore.LoadUserEventsAsync(id, cancellationToken);
+        IDomainEvent[] events = await _eventStore.LoadUserEventsAsync(id, cancellationToken);
 		if (events.Length == 0)
 			return null;
 
