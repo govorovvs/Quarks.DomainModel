@@ -33,13 +33,13 @@ namespace Quarks.DomainModel
 		private bool IsEntityType(Type type)
 		{
 			return type.GetTypeInfo().CustomAttributes.Any(t => t.AttributeType == typeof(EntityAttribute)) ||
-			       typeof(IEntity).GetTypeInfo().IsAssignableFrom(type);
+			       typeof(IEntity).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
 		}
 
 		private bool IsAggregate(Type type)
 		{
 			return type.GetTypeInfo().CustomAttributes.Any(t => t.AttributeType == typeof(AggregateAttribute)) ||
-				   typeof(IAggregate).GetTypeInfo().IsAssignableFrom(type);
+				   typeof(IAggregate).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
 		}
 	}
 }

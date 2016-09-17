@@ -6,7 +6,7 @@
   "frameworks": {
     "net45": {
     },
-    "netstandard1.2": {
+    "netstandard1.3": {
       "dependencies": {
         "System.Linq": "4.1.0",
         "System.Linq.Expressions": "4.1.0",
@@ -26,5 +26,5 @@
     "tags": [ "quarks", "architecture", "domain", "model", "design", "ddd", "eventsourcing", "domainevents" ]
   },
   "title": "Quarks.DomainModel",
-  "version": "3.2.0-*"
+  "version": "3.3.0-*"
 }
