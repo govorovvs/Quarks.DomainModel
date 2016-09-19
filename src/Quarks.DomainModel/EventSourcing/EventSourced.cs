@@ -7,26 +7,27 @@ namespace Quarks.DomainModel.EventSourcing
     /// <summary>
     /// Represents an base class that records all its changes as events.
     /// </summary>
-    public abstract class EventSourced : IEventSourced
+    /// <typeparam name="TEventType">Type of events.</typeparam>
+    public abstract class EventSourced<TEventType> : IEventSourced<TEventType> where TEventType : IEntityEvent
     {
-        private readonly List<IEntityEvent> _events = new List<IEntityEvent>();
+        private readonly List<TEventType> _events = new List<TEventType>();
 
-        IEnumerable<IEntityEvent> IEventSourced.Events
+        IEnumerable<TEventType> IEventSourced<TEventType>.Events
         {
             get { return _events; }
         }
 
-        void IEventSourced.ClearEvents()
+        void IEventSourced<TEventType>.ClearEvents()
         {
             _events.Clear();
         }
 
-        void IEventSourced.Consume(IEnumerable<IEntityEvent> entityEvents)
+        void IEventSourced<TEventType>.Consume(IEnumerable<TEventType> entityEvents)
         {
             if (entityEvents == null) throw new ArgumentNullException(nameof(entityEvents));
             if (entityEvents.Any(x => x == null)) throw new ArgumentException("Some of entity event is null", nameof(entityEvents));
 
-            foreach (IEntityEvent entityEvent in entityEvents)
+            foreach (TEventType entityEvent in entityEvents)
             {
                 ConsumeWithNoTracking(entityEvent);
             }
@@ -42,12 +43,19 @@ namespace Quarks.DomainModel.EventSourcing
         /// Applies the specified event to the entity and track it.
         /// </summary>
         /// <param name="entityEvent">Event should be applied.</param>
-        protected void ConsumeWithTracking(IEntityEvent entityEvent)
+        protected void ConsumeWithTracking(TEventType entityEvent)
         {
             if (entityEvent == null) throw new ArgumentNullException(nameof(entityEvent));
 
             ConsumeWithNoTracking(entityEvent);
             _events.Add(entityEvent);
         }
+    }
+
+    /// <summary>
+    /// Represents an base class that records all its changes as events.
+    /// </summary>
+    public abstract class EventSourced : EventSourced<IEntityEvent>, IEventSourced
+    {
     }
 }
