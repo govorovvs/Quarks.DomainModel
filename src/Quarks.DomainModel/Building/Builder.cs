@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -46,21 +47,63 @@ namespace Quarks.DomainModel.Building
             if (_instance == null)
                 return this;
 
-            MemberExpression memberExpression = propertyPicker.Body as MemberExpression;
-            if (memberExpression == null)
-                throw new InvalidOperationException("Only property and field can be populated via With");
+            List<MemberInfo> members = new List<MemberInfo>();
 
-            PropertyInfo propertyInfo = memberExpression.Member as PropertyInfo;
-            if (propertyInfo != null)
+            Expression exp = propertyPicker.Body;
+
+            while (exp != null)
             {
-                propertyInfo.SetValue(_instance, value);
-                return this;
+                MemberExpression mi = exp as MemberExpression;
+
+                if (mi != null)
+                {
+                    members.Add(mi.Member);
+                    exp = mi.Expression;
+                }
+                else
+                {
+                    ParameterExpression pe = exp as ParameterExpression;
+                    if (pe == null)
+                        throw new InvalidOperationException("Only property and field can be populated via With");
+
+                    break;
+                }
             }
-            FieldInfo fieldInfo = memberExpression.Member as FieldInfo;
-            if (fieldInfo != null)
+
+            if (members.Count == 0)
             {
-                fieldInfo.SetValue(_instance, value);
-                return this;
+                throw new NotSupportedException();
+            }
+
+            object targetObject = _instance;
+
+            for (int i = members.Count - 1; i >= 1; i--)
+            {
+                PropertyInfo pi = members[i] as PropertyInfo;
+
+                if (pi != null)
+                {
+                    targetObject = pi.GetValue(targetObject);
+                }
+                else
+                {
+                    FieldInfo fi = (FieldInfo)members[i];
+                    targetObject = fi.GetValue(targetObject);
+                }
+            }
+
+            {
+                PropertyInfo pi = members[0] as PropertyInfo;
+
+                if (pi != null)
+                {
+                    pi.SetValue(targetObject, value);
+                }
+                else
+                {
+                    FieldInfo fi = (FieldInfo)members[0];
+                    fi.SetValue(targetObject, value);
+                }
             }
 
             return this;

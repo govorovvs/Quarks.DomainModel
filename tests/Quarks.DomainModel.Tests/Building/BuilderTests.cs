@@ -1,11 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using Quarks.DomainModel.Building;
 
 namespace Quarks.DomainModel.Tests.Building
 {
     [TestFixture]
-    public class BuilderTests
+    public class BuilderTest
     {
         [Test]
         public void Can_Populate_Field()
@@ -32,9 +33,17 @@ namespace Quarks.DomainModel.Tests.Building
         }
 
         [Test]
+        public void Can_Populate_Nested_Propery()
+        {
+            var instance = new Builder<FakeClassWithNestedPropery>().With(t => t.NestedProperty.Property, 10).Create();
+
+            Assert.That(instance.NestedProperty.Property, Is.EqualTo(10));
+        }
+
+        [Test]
         public void Can_Be_Constructed_With_Instance()
         {
-            var instance = new FakeClass {Field = 10};
+            var instance = new FakeClass { Field = 10 };
 
             var created = new Builder<FakeClass>(instance).Create();
 
@@ -65,6 +74,7 @@ namespace Quarks.DomainModel.Tests.Building
                () => new Builder<ClassWithNoParameterlessConstructor>().Create());
         }
 
+        [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         private class FakeClass
         {
             public int Field;
@@ -79,6 +89,18 @@ namespace Quarks.DomainModel.Tests.Building
             }
         }
 
+        [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+        private class FakeClassWithNestedPropery
+        {
+            public FakeClassWithNestedPropery()
+            {
+                NestedProperty = new FakeClass();
+            }
+
+            public FakeClass NestedProperty { get; set; }
+        }
+
+        [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         private class ClassWithNoParameterlessConstructor
         {
             public ClassWithNoParameterlessConstructor(int argument)
