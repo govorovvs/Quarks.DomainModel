@@ -87,7 +87,7 @@ namespace Quarks.DomainModel.Building
                 }
                 else
                 {
-                    FieldInfo fi = (FieldInfo)members[i];
+                    FieldInfo fi = (FieldInfo) members[i];
                     targetObject = fi.GetValue(targetObject);
                 }
             }
@@ -97,12 +97,14 @@ namespace Quarks.DomainModel.Building
 
                 if (pi != null)
                 {
-                    pi.SetValue(targetObject, value);
+                    PropertyInfo targetPi = targetObject.GetType().GetTypeInfo().GetDeclaredProperty(pi.Name) ?? pi;
+                    targetPi.SetValue(targetObject, value);
                 }
                 else
                 {
-                    FieldInfo fi = (FieldInfo)members[0];
-                    fi.SetValue(targetObject, value);
+                    FieldInfo fi = (FieldInfo) members[0];
+                    FieldInfo targetFi = targetObject.GetType().GetTypeInfo().GetDeclaredField(fi.Name) ?? fi;
+                    targetFi.SetValue(targetObject, value);
                 }
             }
 

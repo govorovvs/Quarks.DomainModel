@@ -74,6 +74,23 @@ namespace Quarks.DomainModel.Tests.Building
                () => new Builder<ClassWithNoParameterlessConstructor>().Create());
         }
 
+        [Test]
+        public void Can_Construct_Entity_As_Interface()
+        {
+            Entity entity = new Entity();
+
+            IEntity result =
+                new Builder<IEntity>(entity)
+                    .With(x => x.Content, 10)
+                    .With(x => x.Id, 20)
+                    .Create();
+
+            Assert.That(result, Is.InstanceOf<Entity>());
+            Assert.That(result, Is.SameAs(entity));
+            Assert.That(entity.Data, Is.EqualTo(10));
+            Assert.That(entity.Id, Is.EqualTo(20));
+        }
+
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         private class FakeClass
         {
@@ -106,6 +123,26 @@ namespace Quarks.DomainModel.Tests.Building
             public ClassWithNoParameterlessConstructor(int argument)
             {
             }
+        }
+
+        public interface IEntity
+        {
+            object Content { get; set; }
+
+            int Id { get; }
+        }
+
+        public class Entity : IEntity
+        {
+            public int Data { get; set; }
+
+            object IEntity.Content
+            {
+                get { return Data; }
+                set { Data = (int) value; }
+            }
+
+            public int Id { get; private set; }
         }
     }
 }
