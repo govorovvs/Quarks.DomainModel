@@ -91,6 +91,18 @@ namespace Quarks.DomainModel.Tests.Building
             Assert.That(entity.Id, Is.EqualTo(20));
         }
 
+        [Test]
+        public void Can_Populate_Child_Class_As_Interface()
+        {
+            ChildEntity entity = new ChildEntity();
+
+            new Builder<IEntity>(entity)
+                .With(x => x.Id, 10)
+                .Create();
+
+            Assert.That(entity.Id, Is.EqualTo(10));
+        }
+
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         private class FakeClass
         {
@@ -143,6 +155,11 @@ namespace Quarks.DomainModel.Tests.Building
             }
 
             public int Id { get; private set; }
+        }
+
+        public class ChildEntity : Entity
+        {
+            
         }
     }
 }

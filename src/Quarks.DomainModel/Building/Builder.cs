@@ -97,14 +97,12 @@ namespace Quarks.DomainModel.Building
 
                 if (pi != null)
                 {
-                    PropertyInfo targetPi = targetObject.GetType().GetTypeInfo().GetDeclaredProperty(pi.Name) ?? pi;
-                    targetPi.SetValue(targetObject, value);
+                    SetValue(targetObject, pi, value);
                 }
                 else
                 {
                     FieldInfo fi = (FieldInfo) members[0];
-                    FieldInfo targetFi = targetObject.GetType().GetTypeInfo().GetDeclaredField(fi.Name) ?? fi;
-                    targetFi.SetValue(targetObject, value);
+                    SetValue(targetObject,fi, value);
                 }
             }
 
@@ -118,6 +116,28 @@ namespace Quarks.DomainModel.Building
         public T Create()
         {
             return _instance;
+        }
+
+        private void SetValue(object targetObject, PropertyInfo pi, object value)
+        {
+            pi = targetObject.GetType().GetTypeInfo().GetProperty(pi.Name) ?? pi;
+            if (pi.DeclaringType != pi.PropertyType)
+            {
+                pi = pi.DeclaringType.GetTypeInfo().GetProperty(pi.Name);
+            }
+
+            pi.SetValue(targetObject, value);
+        }
+
+        private void SetValue(object targetObject, FieldInfo fi, object value)
+        {
+            fi = targetObject.GetType().GetTypeInfo().GetField(fi.Name) ?? fi;
+            if (fi.DeclaringType != fi.FieldType)
+            {
+                fi = fi.DeclaringType.GetTypeInfo().GetField(fi.Name);
+            }
+
+            fi.SetValue(targetObject, value);
         }
 
         private T CreateInstance()
