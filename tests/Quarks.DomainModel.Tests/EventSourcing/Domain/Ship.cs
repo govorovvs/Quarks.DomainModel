@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Quarks.DomainModel.Events;
 using Quarks.DomainModel.EventSourcing;
 using Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents;
 

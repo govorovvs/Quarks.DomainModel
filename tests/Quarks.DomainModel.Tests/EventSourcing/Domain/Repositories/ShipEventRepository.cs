@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Quarks.DomainModel.Events;
 using Quarks.DomainModel.EventSourcing;
 
 namespace Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories

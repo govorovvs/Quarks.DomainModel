@@ -1,4 +1,5 @@
-﻿using Quarks.DomainModel.EventSourcing;
+﻿using Quarks.DomainModel.Events;
+using Quarks.DomainModel.EventSourcing;
 
 namespace Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents
 {

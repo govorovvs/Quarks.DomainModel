@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Quarks.DomainModel.Building;
+using Quarks.DomainModel.Events;
 using Quarks.DomainModel.EventSourcing;
 using Quarks.DomainModel.Tests.EventSourcing.Domain;
 using Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents;

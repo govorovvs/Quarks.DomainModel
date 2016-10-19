@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quarks.DomainModel.EventSourcing
+namespace Quarks.DomainModel.Events
 {
     /// <summary>
     /// Represents a change to the state of an entity.

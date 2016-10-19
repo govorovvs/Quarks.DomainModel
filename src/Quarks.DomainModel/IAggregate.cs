@@ -3,7 +3,6 @@ using Quarks.DomainModel.Events;
 
 namespace Quarks.DomainModel
 {
-
 	/// <summary>
 	/// Aggregate is a cluster of domain objects that can be treated as a single unit. 
 	/// </summary>

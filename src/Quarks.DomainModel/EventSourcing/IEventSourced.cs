@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Quarks.DomainModel.Events;
 
 namespace Quarks.DomainModel.EventSourcing
 {
