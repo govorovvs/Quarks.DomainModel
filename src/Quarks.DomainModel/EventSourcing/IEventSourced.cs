@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Quarks.DomainModel.Events;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Quarks.DomainModel.EventSourcing
 {
@@ -8,7 +8,7 @@ namespace Quarks.DomainModel.EventSourcing
     /// and uses them to materialize its state by effectively “playing back” 
     /// and consuming all the events related to that entity.
     /// </summary>
-    /// <typeparam name="TEventType">Type of events.</typeparam>
+    [Obsolete("Use IAgregate instead")]
     public interface IEventSourced<TEventType> where TEventType : IEntityEvent
     {
         /// <summary>
@@ -33,6 +33,7 @@ namespace Quarks.DomainModel.EventSourcing
     /// and uses them to materialize its state by effectively “playing back” 
     /// and consuming all the events related to that entity.
     /// </summary>
+    [Obsolete("Use IAgregate instead")]
     public interface IEventSourced : IEventSourced<IEntityEvent>
     { 
     }

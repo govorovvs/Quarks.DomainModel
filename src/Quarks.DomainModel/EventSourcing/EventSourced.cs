@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Quarks.DomainModel.Events;
 
 namespace Quarks.DomainModel.EventSourcing
 {
@@ -9,6 +8,7 @@ namespace Quarks.DomainModel.EventSourcing
     /// Represents an base class that records all its changes as events.
     /// </summary>
     /// <typeparam name="TEventType">Type of events.</typeparam>
+    [Obsolete("Use Agregate instead")]
     public abstract class EventSourced<TEventType> : IEventSourced<TEventType> where TEventType : IEntityEvent
     {
         private readonly List<TEventType> _events = new List<TEventType>();

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Quarks.DomainModel.Events;
-using Quarks.DomainModel.EventSourcing;
 
-namespace Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories
+namespace Quarks.DomainModel.Tests.Domain.Repositories
 {
     public class ShipEventRepository
     {

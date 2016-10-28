@@ -3,7 +3,7 @@ using Quarks.DomainModel.Events;
 
 namespace Quarks.DomainModel
 {
-	/// <summary>
+    /// <summary>
 	/// Aggregate is a cluster of domain objects that can be treated as a single unit. 
 	/// </summary>
 	/// <see href="http://martinfowler.com/bliki/DDD_Aggregate.html"/>
@@ -13,9 +13,7 @@ namespace Quarks.DomainModel
 
     /// <summary>
     /// Aggregate is a cluster of domain objects that can be treated as a single unit. 
-    /// At any time, the aggregate contains the list of occurred events 
-    /// and can distinguish between those committed 
-    /// and those uncommitted that result in pending changes. 
+    /// At any time, the aggregate contains the list of occurred events. 
     /// </summary>
     /// <typeparam name="TEvent">Type of events.</typeparam>
     /// <see href="http://martinfowler.com/bliki/DDD_Aggregate.html"/>

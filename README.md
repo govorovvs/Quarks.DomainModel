@@ -236,7 +236,7 @@ public class ChangeNumberEvent(string number) : IEntityEvent
     public string Number { get; } = number;
 }
 
-public class User : EventSourced, IEntity, IAggregate
+public class User : Aggregate<IEntityEvent>, IEntity
 {
     public string Name { get; private set; }
 
@@ -245,26 +245,26 @@ public class User : EventSourced, IEntity, IAggregate
     public void Rename(string name)
     {
         var evnt = new RenameEvent(name);
-        ConsumeWithTracking(evnt);
+        RiseEvent(evnt);
     } 
 
     public void ChangeNumber(string number)
     {
         var evnt = new ChangeNumberEvent(number);
-        ConsumeWithTracking(evnt);
+        RiseEvent(evnt);
     }
 
-    protected override void ConsumeWithNoTracking(IEntityEvent entityEvent)
+    protected override void ApplyEvent(IEntityEvent entityEvent)
     {
-        DoConsume((dynamic)entityEvent);
+        ApplyEvent((dynamic)entityEvent);
     }
 
-    private void DoConsume(RenameEvent evnt)
+    private void ApplyEvent(RenameEvent evnt)
     {
         Name = evnt.Name;
     }
 
-    private void DoConsume(ChangeNumberEvent evnt)
+    private void ApplyEvent(ChangeNumberEvent evnt)
     {
         Number = evnt.Number;
     }

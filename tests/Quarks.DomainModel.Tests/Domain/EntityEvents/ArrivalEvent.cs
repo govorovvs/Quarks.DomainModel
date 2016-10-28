@@ -1,7 +1,6 @@
 ﻿using Quarks.DomainModel.Events;
-using Quarks.DomainModel.EventSourcing;
 
-namespace Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents
+namespace Quarks.DomainModel.Tests.Domain.EntityEvents
 {
     public class ArrivalEvent : EntityEvent
     {
