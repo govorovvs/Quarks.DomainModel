@@ -288,8 +288,7 @@ public class UserRepository : IRepository<User>
     public async Task ModifyAsync(User user, CancellationToken cancellationToken)
     {
         IDomainEvent[] events = user.AsAggregate().Events;
-        await _eventStore.PersistUserEvents(events);
-        sourced.ClearEvents();
+        await _eventStore.PersistUserEventsAsync(user.Id, events, cancellationToken);
     }
 }
 ```
