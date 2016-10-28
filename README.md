@@ -281,15 +281,13 @@ public class UserRepository : IRepository<User>
 			return null;
 
         User user = CreateEmptyUser();
-        IEventSourced sourced = (IEventSourced)user;
-		sourced.Consume(events);
+		user.AsAggregate().ApplyEvents(events);
 		return user;
     }
 
     public async Task ModifyAsync(User user, CancellationToken cancellationToken)
     {
-        IEventSourced sourced = (IEventSourced)user;
-        IDomainEvent[] events = sourced.Events;
+        IDomainEvent[] events = user.AsAggregate().Events;
         await _eventStore.PersistUserEvents(events);
         sourced.ClearEvents();
     }
