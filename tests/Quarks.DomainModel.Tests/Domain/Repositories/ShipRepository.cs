@@ -1,8 +1,7 @@
 ﻿using System;
-using Quarks.DomainModel.Building;
-using Quarks.DomainModel.EventSourcing;
+using Quarks.Runtime;
 
-namespace Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories
+namespace Quarks.DomainModel.Tests.Domain.Repositories
 {
     public class ShipRepository : IRepository<Ship>
     {
@@ -22,15 +21,13 @@ namespace Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories
         {
             var ship = new Builder<Ship>().Create();
             var events = _eventRepository.Find(time);
-            ((IEventSourced)ship).Consume(events);
+            ship.ApplyEvents(events);
             return ship;
         }
 
         public void Modify(Ship ship)
         {
-            var sourced = (IEventSourced) ship;
-            _eventRepository.Save(sourced.Events);
-            sourced.ClearEvents();
+            _eventRepository.Save(ship.AsAggregate().OccurredEvents);
         }
     }
 }

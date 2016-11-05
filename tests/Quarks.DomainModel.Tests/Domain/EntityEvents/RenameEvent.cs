@@ -1,6 +1,6 @@
-﻿using Quarks.DomainModel.EventSourcing;
+﻿using Quarks.DomainModel.Events;
 
-namespace Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents
+namespace Quarks.DomainModel.Tests.Domain.EntityEvents
 {
     public class RenameEvent : EntityEvent
     {

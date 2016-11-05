@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quarks.DomainModel.EventSourcing
+namespace Quarks.DomainModel.Events
 {
     /// <summary>
     /// Represents a base class for entity events.

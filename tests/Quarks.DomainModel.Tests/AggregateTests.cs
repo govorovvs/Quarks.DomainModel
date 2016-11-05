@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Quarks.DomainModel.Building;
-using Quarks.DomainModel.EventSourcing;
-using Quarks.DomainModel.Tests.EventSourcing.Domain;
-using Quarks.DomainModel.Tests.EventSourcing.Domain.EntityEvents;
-using Quarks.DomainModel.Tests.EventSourcing.Domain.Repositories;
+using Quarks.DomainModel.Events;
+using Quarks.DomainModel.Tests.Domain;
+using Quarks.DomainModel.Tests.Domain.EntityEvents;
+using Quarks.DomainModel.Tests.Domain.Repositories;
+using Quarks.Runtime;
 
-namespace Quarks.DomainModel.Tests.EventSourcing
+namespace Quarks.DomainModel.Tests
 {
     [TestFixture]
-    public class EventSourcingTests
+    public class AggregateTests
     {
         private ShipEventRepository _eventRepository;
         private ShipRepository _repository;
@@ -34,7 +34,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             ship.Rename(name);
 
             Assert.That(ship.Name, Is.EqualTo(name));
-            var evnt = (RenameEvent)((IEventSourced)ship).Events.First();
+            var evnt = (RenameEvent)ship.AsAggregate().OccurredEvents.First();
             Assert.That(evnt.Name, Is.EqualTo(name));
         }
 
@@ -45,7 +45,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             var evnt = new RenameEvent(name);
             var ship = new Builder<Ship>().With(x => x.Name, "oldName").Create();
 
-            ((IEventSourced)ship).Consume(new[] { evnt});
+            ship.AsAggregate().ApplyEvent(evnt);
 
             Assert.That(ship.Name, Is.EqualTo(name));
         }
@@ -59,7 +59,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             ship.ArriveTo(port);
 
             Assert.That(ship.Port, Is.EqualTo(port));
-            var evnt = (ArrivalEvent)((IEventSourced)ship).Events.First();
+            var evnt = (ArrivalEvent)ship.AsAggregate().OccurredEvents.First();
             Assert.That(evnt.Port, Is.EqualTo(port));
         }
 
@@ -70,7 +70,7 @@ namespace Quarks.DomainModel.Tests.EventSourcing
             var evnt = new ArrivalEvent(port);
             var ship = new Builder<Ship>().With(x => x.Port, null).Create();
 
-            ((IEventSourced)ship).Consume(new [] { evnt});
+            ship.AsAggregate().ApplyEvent(evnt);
 
             Assert.That(ship.Port, Is.EqualTo(port));
         }
@@ -84,7 +84,6 @@ namespace Quarks.DomainModel.Tests.EventSourcing
 
             _repository.Modify(ship);
 
-            Assert.That(((IEventSourced) ship).Events, Is.Empty, "Entity persisting clears its events");
             var evnt = (RenameEvent)_eventRepository.Events.Single();
             Assert.That(evnt.Name, Is.EqualTo(name), "Entity persisting should save events");
         }
