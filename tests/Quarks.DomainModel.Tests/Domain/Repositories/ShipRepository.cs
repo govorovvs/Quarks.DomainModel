@@ -1,5 +1,5 @@
 ﻿using System;
-using Quarks.DomainModel.Building;
+using Quarks.Runtime;
 
 namespace Quarks.DomainModel.Tests.Domain.Repositories
 {

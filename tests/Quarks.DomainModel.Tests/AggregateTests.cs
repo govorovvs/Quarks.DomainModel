@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Quarks.DomainModel.Building;
 using Quarks.DomainModel.Events;
 using Quarks.DomainModel.Tests.Domain;
 using Quarks.DomainModel.Tests.Domain.EntityEvents;
 using Quarks.DomainModel.Tests.Domain.Repositories;
+using Quarks.Runtime;
 
 namespace Quarks.DomainModel.Tests
 {
