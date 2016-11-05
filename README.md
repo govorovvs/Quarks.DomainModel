@@ -92,15 +92,15 @@ A mechanism for encapsulating storage, retrieval, and search behavior which emul
 ```csharp
 public interface IAccountRepository : IRepository<Account>
 {
-    public Account FindById(int id);
+    Account FindById(int id);
 }
 ```
 or
 ```csharp
 [Repository(typeof(Account))]
-public class IAccountRepository
+public interface IAccountRepository
 {
-    public Account FindById(int id);
+    Account FindById(int id);
 }
 ```
 
