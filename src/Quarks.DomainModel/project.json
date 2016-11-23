@@ -6,7 +6,7 @@
   "frameworks": {
     "net45": {
     },
-    "netstandard1.3": {
+    "netstandard1.1": {
       "dependencies": {
         "Microsoft.CSharp": "4.3.0",
         "System.Collections": "4.3.0",
