@@ -28,5 +28,5 @@
     "tags": [ "quarks", "architecture", "domain", "model", "design", "ddd", "eventsourcing", "domainevents" ]
   },
   "title": "Quarks.DomainModel",
-  "version": "4.0.0-*"
+  "version": "4.0.1-*"
 }
