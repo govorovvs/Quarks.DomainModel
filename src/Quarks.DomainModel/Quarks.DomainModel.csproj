@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Foundations for domain model design</Description>
+    <AssemblyTitle>Quarks.DomainModel</AssemblyTitle>
+    <VersionPrefix>4.0.1</VersionPrefix>
+    <TargetFrameworks>net45;netstandard1.1</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Quarks.DomainModel</AssemblyName>
+    <PackageId>Quarks.DomainModel</PackageId>
+    <PackageTags>quarks;architecture;domain;model;design;ddd;eventsourcing;domainevents</PackageTags>
+    <PackageIconUrl>https://github.com/govorovvs/Quarks.DomainModel/blob/master/logo.png?raw=true</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/govorovvs/Quarks.DomainModel</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/govorovvs/Quarks.DomainModel.git</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <Version>4.0.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Quarks.DomainModel", "src\Quarks.DomainModel\Quarks.DomainModel.xproj", "{F7D522BD-B480-4F62-9F77-392E56E88FB2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F99425FF-A677-4B50-92F2-70D8E09765A6}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -12,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.cake = build.cake
 		build.cmd = build.cmd
 		build.ps1 = build.ps1
-		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,7 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{463257AD
 		tools\packages.config = tools\packages.config
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Quarks.DomainModel.Tests", "tests\Quarks.DomainModel.Tests\Quarks.DomainModel.Tests.xproj", "{9B7A0314-605A-4F56-89AE-9DBA5A843086}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quarks.DomainModel", "src\Quarks.DomainModel\Quarks.DomainModel.csproj", "{F7D522BD-B480-4F62-9F77-392E56E88FB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quarks.DomainModel.Tests", "tests\Quarks.DomainModel.Tests\Quarks.DomainModel.Tests.csproj", "{9B7A0314-605A-4F56-89AE-9DBA5A843086}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
