@@ -4,7 +4,7 @@
     <Description>Foundations for domain model design</Description>
     <AssemblyTitle>Quarks.DomainModel</AssemblyTitle>
     <VersionPrefix>4.0.1</VersionPrefix>
-    <TargetFrameworks>net45;netstandard1.1</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Quarks.DomainModel</AssemblyName>
     <PackageId>Quarks.DomainModel</PackageId>
