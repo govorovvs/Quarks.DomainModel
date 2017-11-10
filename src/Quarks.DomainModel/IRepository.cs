@@ -11,7 +11,7 @@
 	/// A mechanism for encapsulating storage, retrieval, and search behavior which emulates a collection of objects.
 	/// </summary>
 	/// <typeparam name="TEntity"></typeparam>
-	public interface IRepository<TEntity> where TEntity : IEntity, IAggregate
+	public interface IRepository<TEntity> : IRepository where TEntity : IAggregate
 	{
 	}
 }
